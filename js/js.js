@@ -1,15 +1,13 @@
-// window.onload = menu();
+/* window.onload = menu();
 
-// function menu() {
+ function menu() {
 
-// 	var menuSom = document.getElementById("somMenu");
+ 	var menuSom = document.getElementById("somMenu");
 
-// 	menuSom.addEventListener("ended", function () { menuSom.currentTime = 0; menuSom.play(); }, false);
-// 	menuSom.play();
-// 	menuSom.muted = false;
-// 	console.log(menuSom.muted);
-
-// }
+ 	menuSom.addEventListener("ended", function () { menuSom.currentTime = 0; menuSom.play(); }, false);
+ 	menuSom.play();
+ 	menuSom.muted = false;
+ }*/
 
 function start() { // Inicio da function start()
 
