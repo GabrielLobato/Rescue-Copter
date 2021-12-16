@@ -1,20 +1,23 @@
+
+// Tentativa mal sucedida de colocar música no menú do jogo 
+
 /* window.onload = menu();
 
  function menu() {
 
- 	var menuSom = document.getElementById("somMenu");
+	  var menuSom = document.getElementById("somMenu");
 
- 	menuSom.addEventListener("ended", function () { menuSom.currentTime = 0; menuSom.play(); }, false);
- 	menuSom.play();
- 	menuSom.muted = false;
+	  menuSom.addEventListener("ended", function () { menuSom.currentTime = 0; menuSom.play(); }, false);
+	  menuSom.play();
+	  menuSom.muted = false;
  }*/
 
 function start() { // Inicio da function start()
 
 	$("#inicio").hide();
-	document.getElementById("somMenu").pause();
-	document.getElementById("somMenu").currentTime = 0;
-	
+	// document.getElementById("somMenu").pause();
+	// document.getElementById("somMenu").currentTime = 0;
+
 
 	$("#fundoGame").append("<div id='jogador' class = 'anima1'></div>");
 	$("#fundoGame").append("<div id='inimigo1' class = 'anima2'></div>");
@@ -22,6 +25,8 @@ function start() { // Inicio da function start()
 	$("#fundoGame").append("<div id='amigo' class = 'anima3'></div>");
 	$("#fundoGame").append("<div id='placar'></div>");
 	$("#fundoGame").append("<div id='energia'></div>");
+	$("#fundoGame").append("<div id='pause'></div>");
+
 
 
 	//Principais variáveis do jogo
@@ -42,13 +47,28 @@ function start() { // Inicio da function start()
 	var somGameover = document.getElementById("somGameover");
 	var somPerdido = document.getElementById("somPerdido");
 	var somResgate = document.getElementById("somResgate");
+	var pausa = document.getElementById("pause");
+	var pausado = false;
+	var vol = document.querySelectorAll('audio');
+	vol[0].volume = 0.1;
+	vol[1].volume = 0.1;
+	vol[2].volume = 0.5;
+	vol[3].volume = 0.1;
+	vol[4].volume = 0.1;
+	vol[5].volume = 0.1;
 
-	//Musica em loop
-	musica.addEventListener("ended", function () { musica.currentTime = 0; musica.play(); }, false);
+	pausa.addEventListener("click", pausar);
+
+	// por algum motivo não funciona: js.js:58 Uncaught TypeError: Cannot set properties of undefined (setting 'volume')
+	/*	
+	for(i = 0; i <= vol.length; i++){
+	vol[i].volume = 0.1;
+	 }
+	*/
+
+	//Musica em loop *comando substituído pelo atributo "loop" na própria tag audio*
+	// musica.addEventListener("ended", function () { musica.currentTime = 0; musica.play(); }, false);
 	musica.play();
-
-
-
 
 	//Verifica se o usuário pressionou alguma tecla	
 	jogo.pressionou = [];
@@ -519,6 +539,21 @@ function start() { // Inicio da function start()
 		// $("#fim").html("<h1> Game Over </h1><p>Sua pontuação foi: " + pontos + "</p>" + "<div id='reinicia' onClick=reiniciaJogo()><h3>Jogar Novamente</h3></div>");
 		$("#fim").html(`<h1> Game Over <h1><p>seus pontos no jogo: ${pontos} </p> <div id='reinicia' onClick = restart() <h3> Jogar Novamente</h3></div>`);
 	} // Fim gameOver();
+
+	function pausar() {
+		if (pausado == false) {
+			pausado = true;
+			clearInterval(jogo.timer);
+			musica.pause();
+			$("#pause").css("background-image", "url(imgs/play.png)");
+		}
+		else if (pausado == true) {
+			pausado = false;
+			jogo.timer = setInterval(loop, 30);
+			musica.play();
+			$("#pause").css("background-image", "url(imgs/pause.png)");
+		}
+	}
 
 } // Fim start();
 
